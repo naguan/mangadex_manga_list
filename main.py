@@ -26,4 +26,4 @@ try:
 
 
 except:
-    print("Something went awry. Please try again later.")
+    print("Cannot connect to Mangadex. Please try again later.")
