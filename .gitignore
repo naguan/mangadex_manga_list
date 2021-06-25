@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.vscode/
+
+venv/
+build/
+dist/
+main.spec
+instance/
+.webassets-cache
+to_add.py

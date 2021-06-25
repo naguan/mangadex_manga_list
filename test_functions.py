@@ -13,5 +13,5 @@ def run_update():
 
 def run_get_manga_list():
     bearer = get_bearer_token()
-    get_manga_id("tomo-chan", bearer)
+    get_manga_id("Shinde Kara Honki Dasu", bearer)
 

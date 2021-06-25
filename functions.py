@@ -3,6 +3,7 @@ import csv
 import operator
 import json
 
+
 url = "https://api.mangadex.org"
 
 def bearer_token(credentials):
@@ -41,13 +42,17 @@ def update_manga_read_status(title, status, bearer):
         indent = 4
         )
     id = get_manga_id(title, bearer)
-    try:
+    if id == "no results":
+        print(f"\'{title}\' update to \'{status}\': failed")
+        return False
+
+    else:
         update_reading_status = requests.post(
             f"{url}/manga/{id}/status", headers=bearer, data=payload
         ).json()
-        print(f"Manga Read Status Update: {update_reading_status}")
-    except:
-        print(f"Manga Read Status Update: {update_reading_status}")
+        print(f"\'{title}\' update to \'{status}\': {update_reading_status['result']}")
+        return True
+
 
 def get_manga_id(title, bearer):
     payload = {
@@ -57,12 +62,16 @@ def get_manga_id(title, bearer):
     manga_query = requests.get(
         f"{url}/manga", headers=bearer, params=payload
     ).json()
-    manga_id = manga_query["results"][0]["data"]["id"]
-    return manga_id
 
-def create_csv(follow_list):
+    if len(manga_query['results']) == 0:
+        return "no results"
+    else:
+        manga_id = manga_query["results"][0]["data"]["id"]
+        return manga_id
+
+def create_csv(document_title, follow_list):
     try:
-        with open("Mangadex Follow List.csv", "w", newline="", encoding="utf-8") as f:
+        with open(document_title, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["Title", "Read Status"])
             print("Creating...")
