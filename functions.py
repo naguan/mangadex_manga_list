@@ -2,7 +2,7 @@ import requests
 import csv
 import operator
 import json
-
+import collections
 
 url = "https://api.mangadex.org"
 
@@ -30,7 +30,7 @@ def get_manga_name_read_status(list_of_manga_ids, bearer):
         ).json()
         follow_list[manga_query["data"]["attributes"]["title"]["en"]] = list_of_manga_ids[id]
 
-    sorted_list = sorted(follow_list.items(), key=operator.itemgetter(1))
+    sorted_list = collections.OrderedDict(sorted(follow_list.items(), key=operator.itemgetter(1)))
 
     return sorted_list
 
@@ -42,17 +42,15 @@ def update_manga_read_status(title, status, bearer):
         indent = 4
         )
     id = get_manga_id(title, bearer)
-    if id == "no results":
+    if id == title:
         print(f"\'{title}\' update to \'{status}\': failed")
         return False
-
     else:
         update_reading_status = requests.post(
             f"{url}/manga/{id}/status", headers=bearer, data=payload
         ).json()
         print(f"\'{title}\' update to \'{status}\': {update_reading_status['result']}")
         return True
-
 
 def get_manga_id(title, bearer):
     payload = {
@@ -64,7 +62,7 @@ def get_manga_id(title, bearer):
     ).json()
 
     if len(manga_query['results']) == 0:
-        return "no results"
+        return title
     else:
         manga_id = manga_query["results"][0]["data"]["id"]
         return manga_id
@@ -78,8 +76,8 @@ def create_csv(document_title, follow_list):
             for manga in follow_list:
                     writer.writerow(
                         [
-                            manga[0],
-                            manga[1]
+                            manga,
+                            follow_list[manga]
                         ]
                     )
             print("Completed.")

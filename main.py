@@ -14,7 +14,10 @@ try:
     credentials = {"username": user, "password": password}
     bearer_token = bearer_token(credentials)
     
-    input_value = input("Select what you would like to do:\n1: Create CSV file of your manga list with read status\n2: Update read status of a manga\n")
+    input_value = input("Select what you would like to do:\n"+
+                        "1: Create CSV file of your manga list with read status\n"+
+                        "2: Update read status of a manga\n"+
+                        "Input: ")
     
     while(input_value != ""):
         
@@ -33,7 +36,7 @@ try:
             else:
                 print("Manga title not found. Please try again.")
 
-        if input_value == "3":
+        if input_value == "3": #framework for future json file input
             for manga in new_manga_to_add:
                 read_status = new_manga_to_add[manga]
                 successful_update = update_manga_read_status(manga, read_status, bearer_token)
@@ -43,7 +46,10 @@ try:
             
 
 
-        input_value = input("Select what you would like to do:\n1: Create CSV file of your manga list with read status\n2: Update read status of a manga\nEnter to exit\n")
+        input_value = input("Select what you would like to do:\n"+
+                            "1: Create CSV file of your manga list with read status\n"+
+                            "2: Update read status of a manga\nEnter to exit\n"+
+                            "Input: ")
 
 
 
