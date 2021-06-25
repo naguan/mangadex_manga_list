@@ -1,7 +1,7 @@
 from functions import *
 
-user = "nguan"#input("Username: ")
-password = "Lx2JtJ6RxFV!dfJ"#input("Password: ")
+user = input("Username: ")
+password = input("Password: ")
 credentials = {"username": user, "password": password}
 
 test_title_pass = "boku no hero academia"
