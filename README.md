@@ -15,7 +15,7 @@ There is a secret input 3 that allows for the input of a dict of manga names and
         -creates a csv with the manga that could not have its read status updated due to not being able to find its uuid in the mangadex database
 
 TODO list that will grow eventually:
-take in json/input file instead of dict for input 3 / section off read statuses in different tables in create_csv
+
 be able to create list with wanted read status, instead of all
 
 front end component -> flask project?
