@@ -1,11 +1,12 @@
 from functions import *
-
-user = input("Username: ")
-password = input("Password: ")
+from secret import *
+user = secret_user
+password = secret_password
 credentials = {"username": user, "password": password}
 
 test_title_pass = "boku no hero academia"
 test_title_fail = "boku no villian academia"
+file_name = "text.txt"
 
 def get_bearer_token():
     return bearer_token(credentials)
@@ -41,3 +42,6 @@ def run_get_manga_list_failed():
         print("run_get_manga_list_pass() passed")
     else:
         print("run_get_manga_list_pass() failed")
+
+def run_read_file():
+    print(read_file(file_name))
