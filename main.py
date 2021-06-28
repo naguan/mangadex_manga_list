@@ -11,8 +11,9 @@ try:
     print("Logging in...")
     credentials = {"username": user, "password": password}
     bearer_token = bearer_token(credentials)
-    while len(bearer_token) == 0 :
-        print("Invalid username or password. Please try again.")
+
+    while len(bearer_token) < 1 :
+
         user = input("Username: ") or secret_user
         password = input("Password: ") or secret_password
 
@@ -60,6 +61,17 @@ try:
                 print(  f"List of manga that failed to be updated has been created at {os.getcwd()}" )
             except FileNotFoundError:
                 print("\nFile not found. Please try again.")
+
+        if input_value =="9":
+            try:
+                filename = input("Please enter file name: ")
+                new_manga_to_add = read_file(filename)
+
+                for manga in new_manga_to_add:
+                    id = get_manga_id(manga)
+                    remove_from_follow_list(manga, id, bearer_token)
+            except FileNotFoundError:
+                print("\nFile not found. Please try again.")       
 
         if input_value == "0": #for manual dict input from .py file 
             for manga in new_manga_to_add:

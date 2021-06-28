@@ -48,5 +48,6 @@ def run_read_file():
 
 def run_add_to_follow_list():
     bearer = get_bearer_token()
-    title = "shinryaku"
+    title = "shinryaku ika musume"
     add_to_follow_list(title, id, bearer)
+
