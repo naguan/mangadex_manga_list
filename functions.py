@@ -9,11 +9,15 @@ url = "https://api.mangadex.org"
 def bearer_token(credentials):
     auth = requests.post(
         f"{url}/auth/login", json=credentials
-        )
-    token = auth.json()["token"]["session"]
-    bearer = {"Authorization": f"Bearer {token}"}
-    return bearer
- 
+        ).json()
+
+    if auth["result"] == "ok":
+        token = auth["token"]["session"]
+        bearer = {"Authorization": f"Bearer {token}"}
+        return bearer
+    else:
+        return {}
+
 def get_list_of_manga_and_read_status(bearer):
     list_of_manga = requests.get(
         f"{url}/manga/status", headers=bearer
@@ -59,8 +63,8 @@ def update_manga_read_status(title, status, bearer):
 def add_to_follow_list(title, id, bearer):
     title_to_add_to_follow = requests.post(
         f"{url}/manga/{id}/follow", headers=bearer
-    )
-    if(title_to_add_to_follow['result'] == 'ok'):
+    ).json()
+    if(title_to_add_to_follow["result"] == "ok"):
         print(f"\'{title}\' successfully added to follow list")
     else:
         print(f"\'{title}\' failed to add to follow list")
@@ -85,7 +89,7 @@ def create_csv(document_title, follow_list):
         with open(document_title, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["Title", "Read Status"])
-            print("Creating CSV file...")
+            print("Creating...")
             for manga in follow_list:
                     writer.writerow(
                         [

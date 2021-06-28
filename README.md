@@ -17,5 +17,8 @@ There is a secret input 3 that allows for the input of a dict of manga names and
 TODO list that will grow eventually:
 
 be able to create list with wanted read status, instead of all
+be able to retry login without the program exitting after 1 try
+logout after session terminate
+refresh token?
 
 front end component -> flask project?

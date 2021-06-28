@@ -45,3 +45,8 @@ def run_get_manga_list_failed():
 
 def run_read_file():
     print(read_file(file_name))
+
+def run_add_to_follow_list():
+    bearer = get_bearer_token()
+    title = "shinryaku"
+    add_to_follow_list(title, id, bearer)

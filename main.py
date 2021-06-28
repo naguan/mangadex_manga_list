@@ -5,15 +5,21 @@ from secret import *
 
 try:
     print("Welcome, please login with your Mangadex account...")
-    user = input("Username: ")
-    password = input("Password: ")
-
-    user = secret_user
-    password = secret_password
+    user = input("Username: ") or secret_user
+    password = input("Password: ") or secret_password
 
     print("Logging in...")
     credentials = {"username": user, "password": password}
     bearer_token = bearer_token(credentials)
+    while len(bearer_token) == 0 :
+        print("Invalid username or password. Please try again.")
+        user = input("Username: ") or secret_user
+        password = input("Password: ") or secret_password
+
+        print("Logging in...")
+        credentials = {"username": user, "password": password}
+
+        bearer_token = bearer_token(credentials)
     
     input_value = input("\nSelect what you would like to do:\n"+
                         "1: Create CSV file of your manga list with read status\n"+
@@ -55,7 +61,7 @@ try:
             except FileNotFoundError:
                 print("\nFile not found. Please try again.")
 
-        if input_value == "0": #for dict input from .py file 
+        if input_value == "0": #for manual dict input from .py file 
             for manga in new_manga_to_add:
                 read_status = new_manga_to_add[manga]
                 successful_update = update_manga_read_status(manga, read_status, bearer_token)
@@ -70,5 +76,13 @@ try:
                             "Enter to exit\n"
                             "Input: ")
     print("\nGoodbye")
+except requests.HTTPError:
+    print(requests.HTTPError)
+except requests.ConnectionError:
+    print(requests.ConnectionError)
+except requests.RequestException:
+    print(requests.RequestException)
+except requests.Timeout:
+    print(requests.Timeout)
 except:
     print("Cannot connect to Mangadex. Please try again later.")
