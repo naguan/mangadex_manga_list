@@ -10,7 +10,6 @@ def bearer_token(credentials):
     auth = requests.post(
         f"{url}/auth/login", json=credentials
         ).json()
-    print(auth)
     if auth["result"] == "ok":
         token = auth["token"]["session"]
         bearer = {"Authorization": f"Bearer {token}"}
